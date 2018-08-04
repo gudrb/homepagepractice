@@ -1,12 +1,13 @@
-<h1>{{ question.question_text }}</h1> #폰트 크기
+<h1>{{ question.question_text }}</h1>
+{# 폰트 크기 #}
 
 {% if error_message %}<p><strong>{{error_message}}</strong></p>{% endif %} #굵은 글씨
 
-<form action="{% url 'polls:vote' question.id %}" method="post">#mysite urls 의 namespace 선언에의해 polls:~ 로 표시됨, 뷰로 뿌려준 question.id 사용
-    {% csrf_token %} # 제출시 polls/5/vote 와같은 URL이 post방식으로 넘어옴, view의 vote()함수 실행됨(urls에서 지정해줬음)
+<form action="{% url 'polls:vote' question.id %}" method="post">{# mysite urls 의 namespace 선언에의해 polls:~ 로 표시됨, 뷰로 뿌려준 question.id 사용 #}
+    {% csrf_token %} {# 제출시 polls/5/vote 와같은 URL이 post방식으로 넘어옴, view의 vote()함수 실행됨(urls에서 지정해줬음)#}
     {% for choice in question.choice_set.all %}
         <input type="radio" name="choice" id="choice{{ forloop.counter}}" value="{{choice.id}}"/>
-    <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label><br />
+    <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label><br /> {# forloop.counter: 현재까지 실행한 루프 카운트#}
     {% endfor %}
     <input type="submit" value="Vote" />
 </form>

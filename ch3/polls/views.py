@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect,HttpResponse
 from django.core.urlresolvers import reverse
 from polls.models import Question
+from polls.form import NameForm
 
 # Create your views here.
 def index(request): # 모델에서 가져옴
@@ -30,3 +31,13 @@ def vote(request,question_id):
 def results(request,question_id):
     question = get_object_or_404(Question,pk=question_id)
     return render(request, 'polls/results.html',{'question':question})
+
+def get_name(request):
+    if request.method == 'POST':
+        form = NameForm(request.POST)
+        if form.is_valid():
+            new_name = form.cleaned_data['name']
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = NameForm()
+    return render(request,'name.html',{'form':form})

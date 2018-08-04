@@ -1,0 +1,63 @@
+templete code + rendering = templete file
+
+templete variable: {{ variable }}
+{{ foo.bar }}
+1.check foo is dictionary, and search key 'bar'
+2.check foo is class, and search attribute 'bar'
+3.check foo is list, and search value 'bar'
+
+filter (|)
+
+{{name|lower}}: 소문자로 바꿔줌
+{{text|escape|linebreaks}}: <p>테그 달아주기
+{{bio|truncatewords:30}}: 30개 단어 보여주고 줄바꿈 없애기
+{{list|join:"//"}}
+: ['a','b','c'] -> "a//b//c"
+{{value|default:"nothing"}}:변수값이 False 이거나 null인 경우 "nothing"으로 보여줌
+
+{{value|length}}: value 가 string 이거나 list이여도 가능 
+['a','b','c'] 이면 3
+
+{{value|striptags}}: HTML태그를 모두 없애줌
+
+{{value|pluralize}}: 복수 접미사 붙여줌
+
+{{value|add:"2"}}: value 가 4라면 6반환
+
+{{fist|add:second}}:
+first="python",second="django" -> "pythondjango"
+first=[1,2,3],second=[4,5,6] -> [1,2,3,4,5,6]
+first="5",second="10"->15
+
+탬플릿 태그
+{% for athlete in athlete_list %}
+<li>{{athlete.name}}</li>
+{% endfor %}
+
+forloop.counter 변수:1로시작 현재까지 루프를 실행한 횟수
+
+{% if athlete_list|length >1 %}
+
+if문은 boolean연산자와 함께 사용가능
+: and, or, not, and not, ==, !=, <, >, <=, >=,in, not in
+
+<form action="." method="post">{% csrf_token %}
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+# url 하드코드 방지!(html에서)
+<form action="/polls/3/vote/" method="post">
+
+{%url 'namespace:view-name' arg1 arg2 %}
+
+{%with%}: 부하가 큰 동작의 결과를 저장해둠
+{% with total=business.employees.count %}
+	{{ total }} people works at business
+{% endwith %}
+
+{% load somelibrary package.otherlibrary %}
+
+
+
+{# #}:한줄 주석
+{% comment "optional note"%}:여러줄 주석
+{% endcomment %}
